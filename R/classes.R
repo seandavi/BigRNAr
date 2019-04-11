@@ -1,0 +1,51 @@
+.baseURL="http://graphql-omicidx.cancerdatasci.org/"
+.get_cache <- function()
+  {
+    cache <- rappdirs::user_cache_dir(appname="BigRNA")
+    x = BiocFileCache::BiocFileCache(cache)
+    x
+  }
+
+
+#' A connection to BigRNA
+#'
+#' @slot url url bigRNA
+#' @slot bfc The BiocFileCache
+#'
+#' @exportClass BigRNAConnection
+setClass("BigRNAConnection",
+         representation(url = "character",
+                        bfc = "BiocFileCache"),
+         prototype(url = .baseURL,
+                   bfc = .get_cache() ))
+
+#' @export
+setGeneric("datafile", function(object, path) {
+  standardGeneric("datafile")
+})
+
+
+#' @importFrom dplyr filter
+#' @importFrom magrittr %>%
+#' @export
+setMethod('datafile',
+          c('BigRNAConnection', 'character'),
+          function(object, path) {
+            url = paste0(object@url,'/data/', path)
+            res = bfcinfo(object@bfc) %>% dplyr::filter(fpath==url)
+            if(nrow(res)==1)
+              return(res$rpath[1])
+            bfcrpath(object@bfc,paste0(object@url,'/data/', path))
+          }
+)
+
+#' @export
+setGeneric('getCache', function(object){
+  standardGeneric("getCache")
+})
+
+#' @export
+setMethod('getCache', "BigRNAConnection", function(object){
+  object@bfc
+})
+
