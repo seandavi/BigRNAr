@@ -15,7 +15,13 @@
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-93043521-1"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-93043521-1');
+</script>
 </head>
 <body>
     <div class="container template-article">
@@ -101,8 +107,8 @@
 <a href="#background" class="anchor"></a>Background</h1>
 <p>BigRNA is a large compendium of homogeneously processed public genomics datasets and accompanying metadata collected from the source repositories. BigRNAr connects R to the available data and provides R-based metadata search and retrieval.</p>
 <div class="figure">
-<div id="htmlwidget-d0501b559b5a2d67f0c5" style="width:700px;height:432.632880098888px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d0501b559b5a2d67f0c5">{"x":{"diagram":"\ndigraph bigrna {\n  subgraph cluster_0 {\n    label=\"SRA\"\n    data [label=\"RNA-seq\"]\n    meta [label=\"metadata\"]\n  }\n  data -> salmon -> quantifications -> download\n  subgraph cluster_1 {\n    label=\"API\"\n    download [label=\"data\ndownload\"]\n    graphql [label=\"graphql\nmetadata\"]\n    meta -> graphql\n  }\n  subgraph cluster_2 {\n    style=\"filled\"\n    label=\"BigRNAr\"\n    BigRNAConnection\n  }\n  BigRNAConnection -> download [label=\"datafile\"]\n  BigRNAConnection -> graphql [label=\"gqlQuery\"]\n}\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><p class="caption">
+<div id="htmlwidget-64ca41e29394a5d0c80a" style="width:700px;height:432.632880098888px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-64ca41e29394a5d0c80a">{"x":{"diagram":"\ndigraph bigrna {\n  subgraph cluster_0 {\n    label=\"SRA\"\n    data [label=\"RNA-seq\"]\n    meta [label=\"metadata\"]\n  }\n  data -> salmon -> quantifications -> download\n  subgraph cluster_1 {\n    label=\"API\"\n    download [label=\"data\ndownload\"]\n    graphql [label=\"graphql\nmetadata\"]\n    meta -> graphql\n  }\n  subgraph cluster_2 {\n    style=\"filled\"\n    label=\"BigRNAr\"\n    BigRNAConnection\n  }\n  BigRNAConnection -> download [label=\"datafile\"]\n  BigRNAConnection -> graphql [label=\"gqlQuery\"]\n}\n      ","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script><p class="caption">
 Overview of BigRNA information flow and connection from R. Data are collected from public repositories like NCBI Short Read Archive (SRA) and processed using <strong>salmon</strong>. Metadata, including experimental protocols, sample details, and study descriptions and abstracts are simultaneously mined. The BigRNA API exposes the metadata via a GraphQL endpoint and the data as individual files for each processed sample. This package, BigRNAr, connects R to these resources.
 </p>
 </div>
@@ -187,7 +193,7 @@ Overview of BigRNA information flow and connection from R. Data are collected fr
 <a class="sourceLine" id="cb4-49" data-line-number="49"><span class="st">}</span></a>
 <a class="sourceLine" id="cb4-50" data-line-number="50"><span class="st">'</span></a>
 <a class="sourceLine" id="cb4-51" data-line-number="51"></a>
-<a class="sourceLine" id="cb4-52" data-line-number="52">x=<span class="kw">gqlQuery</span>(bigrna, studyFullTextSearch, </a>
+<a class="sourceLine" id="cb4-52" data-line-number="52">x=<span class="kw"><a href="../reference/gqlQuery.html">gqlQuery</a></span>(bigrna, studyFullTextSearch, </a>
 <a class="sourceLine" id="cb4-53" data-line-number="53">           <span class="dt">variables=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">match=</span><span class="st">'colon &amp; cancer'</span>), </a>
 <a class="sourceLine" id="cb4-54" data-line-number="54">           <span class="dt">handler=</span>dataframe_handler)</a>
 <a class="sourceLine" id="cb4-55" data-line-number="55"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(x)</a></code></pre></div>
@@ -218,13 +224,13 @@ Overview of BigRNA information flow and connection from R. Data are collected fr
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  }</span></a>
 <a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">}</span></a>
 <a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">'</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">x=<span class="kw">gqlQuery</span>(bigrna, fileListQuery, </a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">x=<span class="kw"><a href="../reference/gqlQuery.html">gqlQuery</a></span>(bigrna, fileListQuery, </a>
 <a class="sourceLine" id="cb7-22" data-line-number="22">           <span class="dt">handler=</span>dataframe_handler)</a>
 <a class="sourceLine" id="cb7-23" data-line-number="23">df =<span class="st"> </span>x<span class="op">$</span>edges</a>
 <a class="sourceLine" id="cb7-24" data-line-number="24">maxN =<span class="st"> </span><span class="dv">10000</span></a>
 <a class="sourceLine" id="cb7-25" data-line-number="25"><span class="co"># get about 10000 sample file metadata.</span></a>
 <a class="sourceLine" id="cb7-26" data-line-number="26"><span class="cf">while</span>(x<span class="op">$</span>pageInfo<span class="op">$</span>hasNextPage <span class="op">&amp;</span><span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(df)<span class="op">&lt;</span>maxN)  {</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27">  x =<span class="st"> </span><span class="kw">gqlQuery</span>(bigrna, fileListQuery, </a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">  x =<span class="st"> </span><span class="kw"><a href="../reference/gqlQuery.html">gqlQuery</a></span>(bigrna, fileListQuery, </a>
 <a class="sourceLine" id="cb7-28" data-line-number="28">          <span class="dt">variables=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">cursor=</span>x<span class="op">$</span>pageInfo<span class="op">$</span>endCursor), </a>
 <a class="sourceLine" id="cb7-29" data-line-number="29">           <span class="dt">handler=</span>dataframe_handler)</a>
 <a class="sourceLine" id="cb7-30" data-line-number="30">  df =<span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>(df, x<span class="op">$</span>edges)</a>
@@ -250,7 +256,7 @@ Overview of BigRNA information flow and connection from R. Data are collected fr
 <a href="#download" class="anchor"></a>Download</h2>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">fnames =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">sapply</a></span>(df<span class="op">$</span>node.key[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>], <span class="cf">function</span>(path) {</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">  path =<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">sub</a></span>(<span class="st">'^/'</span>,<span class="st">''</span>,path)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="kw">datafile</span>(bigrna, path)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="kw"><a href="../reference/datafile.html">datafile</a></span>(bigrna, path)</a>
 <a class="sourceLine" id="cb9-4" data-line-number="4">})</a></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(fnames)</a></code></pre></div>
 <pre><code>##                results/10090/gencode/M19/SRX4147707/quant.genes.sf.gz 
