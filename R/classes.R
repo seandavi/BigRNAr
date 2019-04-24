@@ -4,7 +4,7 @@
 #' @importFrom BiocFileCache BiocFileCache
 .get_cache <- function()
   {
-    cache <- rappdirs::user_cache_dir(appname="BigRNA")
+    cache <- rappdirs::user_cache_dir(appname="BigRNAr")
     x = BiocFileCache::BiocFileCache(cache)
     x
   }
