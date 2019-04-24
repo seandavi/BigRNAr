@@ -3,25 +3,64 @@ title: "Using BigRNA"
 author:
 - name: Sean Davis, MD, PhD
   affiliation: Center for Cancer Research, National Cancer Institute, National Institutes of Health, Bethesda, MD
-- name: Second Author
-  affiliation: Second Author's Affiliation
-  email: corresponding@author.com
-package: packageName
+  email: seandavi@gmail.com
+package: BigRNAr
 output:
   BiocStyle::html_document
 abstract: |
-  Description of your vignette
+  BigRNA is a large compendium of homogeneously processed public genomics 
+  datasets and accompanying metadata collected from the source repositories.
+  BigRNAr connects R to the available data and provides R-based metadata 
+  search and retrieval.
 vignette: |
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+# Background
+
+BigRNA is a large compendium of homogeneously processed public genomics 
+datasets and accompanying metadata collected from the source repositories.
+BigRNAr connects R to the available data and provides R-based metadata 
+search and retrieval.
+
+```{r fig.cap="Overview of BigRNA information flow and connection from R. Data are collected from public repositories like NCBI Short Read Archive (SRA) and processed using **salmon**. Metadata, including experimental protocols, sample details, and study descriptions and abstracts are simultaneously mined. The BigRNA API exposes the metadata via a GraphQL endpoint and the data as individual files for each processed sample. This package, BigRNAr, connects R to these resources. ", echo=FALSE, message=FALSE}
+library(DiagrammeR)
+grViz('
+digraph bigrna {
+  subgraph cluster_0 {
+    label="SRA"
+    data [label="RNA-seq"]
+    meta [label="metadata"]
+  }
+  data -> salmon -> quantifications -> download
+  subgraph cluster_1 {
+    label="API"
+    download [label="data\ndownload"]
+    graphql [label="graphql\nmetadata"]
+    meta -> graphql
+  }
+  subgraph cluster_2 {
+    style="filled"
+    label="BigRNAr"
+    BigRNAConnection
+  }
+  BigRNAConnection -> download [label="datafile"]
+  BigRNAConnection -> graphql [label="gqlQuery"]
+}
+      ')
+```
+
+
+
 # Getting started
 
 ```{r eval=FALSE}
 BiocManager::install("seandavi/BigRNA")
 ```
+
+
 
 
 ## Create BigRNA connection object
