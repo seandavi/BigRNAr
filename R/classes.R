@@ -9,6 +9,17 @@
     x
   }
 
+#' Create a BigRNAConnection
+#' 
+#' @param url a character representing the base URL for BigRNA
+#' @param bfc a \code{\link[BiocFileCache]{BiocFileCache}} object
+#' 
+#' @examples 
+#' bigrna = BigRNAConnection()
+#' @export
+BigRNAConnection = function(url = .baseURL, bfc = .get_cache()) {
+  return(new("BigRNAConnection", url = url, bfc = bfc))
+}
 
 #' A connection to BigRNA
 #'

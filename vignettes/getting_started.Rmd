@@ -69,7 +69,7 @@ BiocManager::install("seandavi/BigRNA")
 library(knitr)
 opts_chunk$set(message=FALSE, cache=FALSE)
 library(BigRNAr)
-bigrna = new("BigRNAConnection")
+bigrna = BigRNAConnection()
 bigrna
 ```
 
@@ -179,7 +179,7 @@ head(df)
 ```
 
 
-## Download
+## Download data
 
 
 
