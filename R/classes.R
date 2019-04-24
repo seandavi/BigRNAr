@@ -1,4 +1,7 @@
 .baseURL="http://bigrna.cancerdatasci.org/"
+
+#' @importFrom rappdirs user_cache_dir
+#' @importFrom BiocFileCache BiocFileCache
 .get_cache <- function()
   {
     cache <- rappdirs::user_cache_dir(appname="BigRNA")
