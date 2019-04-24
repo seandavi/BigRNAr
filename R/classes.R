@@ -30,6 +30,7 @@ setGeneric("datafile", function(object, path) {
 
 #' @importFrom dplyr filter
 #' @importFrom magrittr %>%
+#' @importFrom BiocFileCache bfcinfo bfcrpath
 #' @export
 setMethod('datafile',
           c('BigRNAConnection', 'character'),

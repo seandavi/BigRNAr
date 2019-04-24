@@ -104,8 +104,11 @@ print(datatable(x$edges))
 
 ```{r fileslisting}
 fileListQuery = '
-{
-  allBigrnaFiles(filter: {filename: {equalTo: "quant.genes.sf.gz"}}) {
+query getFiles($cursor: Cursor=null) {
+  allBigrnaFiles(
+    filter: {filename: {equalTo: "quant.genes.sf.gz"}}
+    after: $cursor
+  ) {
     edges {
       node {
         key
@@ -121,13 +124,12 @@ fileListQuery = '
 }
 '
 x=gqlQuery(bigrna, fileListQuery, 
-           variables=list(match='colon & cancer', cursor=NULL), 
            handler=dataframe_handler)
 maxN = 1000
 df = x$edges
-while(x$pageInfo$hasNextPage & nrow(df)<maxN ) {
+while((x$pageInfo$hasNextPage) & (nrow(df)<maxN) ) {
   x=gqlQuery(bigrna, fileListQuery, 
-           variables=list(match='colon & cancer', cursor=x$pageInfo$endCursor), 
+           variables=list(cursor=x$pageInfo$endCursor), 
            handler=dataframe_handler)
   df = dplyr::bind_rows(df, x$edges)
 }
@@ -139,7 +141,7 @@ while(x$pageInfo$hasNextPage & nrow(df)<maxN ) {
 
 
 ```{r}
-fnames = sapply(df$node.key[1:100], function(path) {
+fnames = sapply(df$node.key[1:10], function(path) {
   path = sub('^/','',path)
   datafile(bigrna, path)
 })
