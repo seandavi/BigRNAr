@@ -27,7 +27,9 @@ BiocManager::install("seandavi/BigRNA")
 ## Create BigRNA connection object
 
 ```{r}
-library(BigRNA)
+library(knitr)
+opts_chunk$set(message=FALSE, cache=FALSE)
+library(BigRNAr)
 bigrna = new("BigRNAConnection")
 bigrna
 ```
@@ -125,14 +127,16 @@ query getFiles($cursor: Cursor=null) {
 '
 x=gqlQuery(bigrna, fileListQuery, 
            handler=dataframe_handler)
-maxN = 1000
 df = x$edges
-while((x$pageInfo$hasNextPage) & (nrow(df)<maxN) ) {
-  x=gqlQuery(bigrna, fileListQuery, 
-           variables=list(cursor=x$pageInfo$endCursor), 
+maxN = 10000
+# get about 10000 sample file metadata.
+while(x$pageInfo$hasNextPage & nrow(df)<maxN)  {
+  x = gqlQuery(bigrna, fileListQuery, 
+          variables=list(cursor=x$pageInfo$endCursor), 
            handler=dataframe_handler)
   df = dplyr::bind_rows(df, x$edges)
 }
+head(df)
 ```
 
 
