@@ -22,6 +22,14 @@ setClass("BigRNAConnection",
          prototype(url = .baseURL,
                    bfc = .get_cache() ))
 
+#' Access a data file from BigRNA
+#' 
+#' @param object A BigRNAConnection object
+#' @param path The "key" for a data file in BigRNA
+#' 
+#' @seealso 
+#' \code{\link{gqlQuery}}
+#' 
 #' @export
 setGeneric("datafile", function(object, path) {
   standardGeneric("datafile")
@@ -46,6 +54,11 @@ setMethod('datafile',
           }
 )
 
+#' The the BiocFileCache from a BigRNAConnection
+#' 
+#' @return 
+#' A BiocFileCache
+#' 
 #' @export
 setGeneric('getCache', function(object){
   standardGeneric("getCache")
@@ -69,6 +82,11 @@ setMethod('getCache', "BigRNAConnection", function(object){
   return(handler(res))
 }
 
+#' Query BigRNA metadata
+#' 
+#' @param object A BigRNAConnection object
+#' @param query The query
+#' 
 #' @export
 setGeneric('gqlQuery', function(object, query, ...) {
   standardGeneric("gqlQuery")
